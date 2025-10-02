@@ -1,0 +1,75 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  background-color: var(--primary-bg);
+  color: #fff;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+:root {
+  --primary-bg: #09090b;
+  --secondary-bg: #141319;
+  --tertiary-bg: #17171c;
+}
+
+.sp-text{
+  background-image: conic-gradient(at top, #86efac, #22d3ee);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.icon{
+  padding: 12px;
+  font-size: 20px;
+  border: 1px solid #1f2937;
+  border-radius:10px;
+  background-color: var(--secondary-bg);
+  cursor: pointer;
+}
+
+
+/* ========== Responsive Styles for Small Devices ========== */
+@media (max-width: 768px) {
+  /* Navbar padding smaller for small devices */
+  .nav {
+    padding: 0 20px; /* instead of 100px */
+  }
+
+  /* Logo font smaller */
+  .nav .logo h3 {
+    font-size: 20px;
+  }
+
+  /* Icons spacing smaller */
+  .icons {
+    gap: 10px;
+  }
+
+  /* Parent container inside Home.jsx */
+  .home-container {
+    flex-direction: column; /* stack vertically */
+    padding: 0 20px; /* reduce side padding */
+    gap: 20px; /* add spacing between stacked boxes */
+  }
+
+  /* Left & Right Boxes full width on small screens */
+  .left, 
+  .right {
+    width: 100% !important; /* override 50% */
+    height: 85vh; /* let content decide height */
+  }
+
+}
+
+
