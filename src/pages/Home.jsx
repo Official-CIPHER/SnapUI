@@ -13,10 +13,9 @@ import { FiExternalLink, FiRefreshCcw } from "react-icons/fi";
 import { GoogleGenAI } from "@google/genai";
 import { ClipLoader } from "react-spinners";
 
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 // { value: "react-css", label: "React + CSS" },
-
 
 const Home = () => {
   const options = [
@@ -41,18 +40,16 @@ const Home = () => {
   const [frameWork, setFrameWork] = useState(
     () => JSON.parse(localStorage.getItem("frameWork")) || options[0]
   );
-  const [code, setCode] = useState(
-    () => localStorage.getItem("code") || ""
-  );
+  const [code, setCode] = useState(() => localStorage.getItem("code") || "");
   const [loading, setLoading] = useState(false);
   const [isNewTapOpen, setIsNewTapOpen] = useState(
     () => JSON.parse(localStorage.getItem("isNewTapOpen")) || false
   );
-  
-  // refresh 
+
+  // refresh
   const [previewKey, setPreviewKey] = useState(0);
 
-// 🔹 Persist state changes into localStorage
+  // 🔹 Persist state changes into localStorage
   useEffect(() => {
     localStorage.setItem("outputScreen", JSON.stringify(outputScreen));
   }, [outputScreen]);
@@ -77,18 +74,17 @@ const Home = () => {
     localStorage.setItem("isNewTapOpen", JSON.stringify(isNewTapOpen));
   }, [isNewTapOpen]);
 
-
   function extractCode(response) {
     const match = response.match(/```(?:\w+)?\n?([\s\S]*?)```/);
     return match ? match[1].trim() : response.trim();
   }
 
   // The client gets the API key from the environment variable `GEMINI_API_KEY`.
-  const ai = new GoogleGenAI({apiKey:import.meta.env.VITE_GEMINI_API_KEY});
-
+  const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
 
   async function getResponse() {
-    if (!prompt.trim()) return toast.error("Please describe your component first");
+    if (!prompt.trim())
+      return toast.error("Please describe your component first");
 
     try {
       setLoading(true);
@@ -129,33 +125,33 @@ Requirements:
     } finally {
       setLoading(false);
     }
+  }
+
+  const copyCode = async () => {
+    if (!code.trim()) return toast.error("No code to copy");
+    try {
+      await navigator.clipboard.writeText(code);
+
+      toast.success("Code copied to clipboard");
+    } catch (error) {
+      console.error("Failed to Copy :", err);
+      toast.error("Failed to copy");
+    }
   };
 
-const copyCode = async() => {
-  if (!code.trim()) return toast.error("No code to copy");
-  try {
-    await navigator.clipboard.writeText(code);
-    
-    toast.success("Code copied to clipboard")
-  } catch (error) {
-    console.error('Failed to Copy :', err)
-    toast.error("Failed to copy")
-  }
-}
+  const downloadFile = () => {
+    if (!code.trim()) return toast.error("No code to download");
 
-const downloadFile = () => {
-  if (!code.trim()) return toast.error("No code to download");
-
-  const fileName = "SnapUI Code.html"
-  const blob = new Blob([code],{type:'text/plain'})
-  let url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = fileName;
-  link.click();
-  URL.revokeObjectURL(url);
-  toast.success("File Downloaded")
-}
+    const fileName = "SnapUI Code.html";
+    const blob = new Blob([code], { type: "text/plain" });
+    let url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = fileName;
+    link.click();
+    URL.revokeObjectURL(url);
+    toast.success("File Downloaded");
+  };
 
   return (
     <div>
@@ -205,13 +201,15 @@ const downloadFile = () => {
               input: (base) => ({ ...base, color: "#fff" }),
             }}
             onChange={(selectedOption) => setFrameWork(selectedOption)}
-            
           />
 
           <p className="text-[15px] font-[700] mt-5">Describe your component</p>
 
           <textarea
-            onChange={(e) => {setPrompt(e.target.value)}} value={prompt}
+            onChange={(e) => {
+              setPrompt(e.target.value);
+            }}
+            value={prompt}
             className="w-full min-h-[150px] rounded-xl bg-[#000] mt-3 p-[10px] "
             placeholder="Describe your component in detail and let AI will help for your to build that component."
           ></textarea>
@@ -229,18 +227,19 @@ const downloadFile = () => {
           hover:scale-90 transition-all duration-500 font-semibold
           "
             >
-              {
-                loading === true ?
-               <>
-                  <ClipLoader size={16} color="rgba(40, 203, 87, 1)" 
+              {loading === true ? (
+                <>
+                  <ClipLoader
+                    size={16}
+                    color="rgba(40, 203, 87, 1)"
                     className="text-[30px]"
                   />
-               </> :
+                </>
+              ) : (
                 <i>
                   <BsStars />
                 </i>
-              }
-
+              )}
               Generate
             </button>
           </div>
@@ -249,7 +248,7 @@ const downloadFile = () => {
         {/* Right Container */}
         <div className="right relative w-[50%] h-[85vh] bg-[#141319] mt-5 rounded-xl">
           {outputScreen === false ? (
-            <>  
+            <>
               <div className="skeleton w-full h-full flex items-center flex-col justify-center ">
                 <div
                   className="circle p-[20px] w-[70px] h-[70px] rounded-[50%] 
@@ -267,30 +266,39 @@ const downloadFile = () => {
           ) : (
             <>
               <div className="top w-full h-[60px] bg-[#17171C] flex items-center gap-[15px] px-[20px] font-medium">
-
-                  <button onClick={() => setTab(1)} className={`btn w-[50%] p-[10px] 
+                <button
+                  onClick={() => setTab(1)}
+                  className={`btn w-[50%] p-[10px] 
                     flex items-center justify-center px-[20px] gap-[10px]  rounded-xl cursor-pointer transition-all duration-300
-                    ${tab === 1 ?"bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-green-300/60  to-cyan-300/60 text-[#201f1fa3]":
-                    "text-[gray]"}`}>
-                      <i>
-                        <IoIosCode className="text-xl"/>
-                      </i>
-                      Code Editor
-                    </button>
-                  <button onClick={() => setTab(2)} className={`btn w-[50%] p-[10px] 
+                    ${
+                      tab === 1
+                        ? "bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-green-300/60  to-cyan-300/60 text-[#201f1fa3]"
+                        : "text-[gray]"
+                    }`}
+                >
+                  <i>
+                    <IoIosCode className="text-xl" />
+                  </i>
+                  Code Editor
+                </button>
+                <button
+                  onClick={() => setTab(2)}
+                  className={`btn w-[50%] p-[10px] 
                     rounded-xl cursor-pointer flex items-center justify-center px-[20px] gap-[10px] transition-all duration-300
-                    ${tab === 2 ?"bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-green-300/60  to-cyan-300/60 text-[#201f1fa3]":
-                    "text-[gray]"}`}>
-                      <i>
-                        <IoEyeOutline />
-                      </i>
-                      Live Preview
-                    </button>
-
+                    ${
+                      tab === 2
+                        ? "bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-green-300/60  to-cyan-300/60 text-[#201f1fa3]"
+                        : "text-[gray]"
+                    }`}
+                >
+                  <i>
+                    <IoEyeOutline />
+                  </i>
+                  Live Preview
+                </button>
               </div>
 
               <div className="top-2 w-full h-[60px] bg-[#17171C] flex items-center justify-between px-[15px] sm:px-[20px]">
-                
                 {/* Left: Code Editor Label */}
                 <div className="flex items-center gap-2">
                   <p className="font-bold text-sm sm:text-base">Code Editor</p>
@@ -298,113 +306,104 @@ const downloadFile = () => {
 
                 {/* Right: Copy and Export Buttons */}
                 <div className="flex items-center gap-2 sm:gap-3">
-                  
-                  {
-                    tab === 1 ?
+                  {tab === 1 ? (
                     <>
-                      <button 
-                      onClick={copyCode}
-                      className="w-[84px] h-[34px] sm:w-[80px] sm:h-[40px] rounded-lg border font-semibold border-zinc-800 flex items-center justify-center gap-[5px] hover:scale-90 transition-all hover:bg-[#333] duration-200">
+                      <button
+                        onClick={copyCode}
+                        className="w-[84px] h-[34px] sm:w-[80px] sm:h-[40px] rounded-lg border font-semibold border-zinc-800 flex items-center justify-center gap-[5px] hover:scale-90 transition-all hover:bg-[#333] duration-200"
+                      >
                         <i>
                           <IoCopyOutline size={16} />
                         </i>
                         Copy
                       </button>
-                      <button 
-                      onClick={downloadFile}
-                      className="w-[90px] h-[34px] sm:w-[90px] sm:h-[40px] rounded-lg font-semibold border border-zinc-800 flex items-center justify-center gap-[5px] hover:scale-90 transition-all hover:bg-[#333] duration-200">
+                      <button
+                        onClick={downloadFile}
+                        className="w-[90px] h-[34px] sm:w-[90px] sm:h-[40px] rounded-lg font-semibold border border-zinc-800 flex items-center justify-center gap-[5px] hover:scale-90 transition-all hover:bg-[#333] duration-200"
+                      >
                         <i>
-                          <HiOutlineInboxArrowDown  size={16} />
+                          <HiOutlineInboxArrowDown size={16} />
                         </i>
                         Export
                       </button>
-                    </> 
-                    : 
+                    </>
+                  ) : (
                     <>
-                      <button 
-                      onClick={() => setIsNewTapOpen(true)}
-                      className="w-[160px] h-[34px] sm:w-[160px] sm:h-[40px] rounded-lg font-semibold border border-zinc-800 flex items-center justify-center gap-[5px] hover:scale-90 transition-transform hover:bg-[#333] duration-200">
+                      <button
+                        onClick={() => setIsNewTapOpen(true)}
+                        className="w-[160px] h-[34px] sm:w-[160px] sm:h-[40px] rounded-lg font-semibold border border-zinc-800 flex items-center justify-center gap-[5px] hover:scale-90 transition-transform hover:bg-[#333] duration-200"
+                      >
                         <i>
-                          <FiExternalLink size={16}/>
+                          <FiExternalLink size={16} />
                         </i>
                         Open in New Tab
                       </button>
-                      <button 
-                        onClick={() => setPreviewKey(prev => prev + 1)}
-                      className="w-[120px] h-[34px] sm:w-[120px] sm:h-[40px] rounded-lg font-semibold border border-zinc-800 flex items-center justify-center gap-[5px] hover:scale-90 transition-all hover:bg-[#333] duration-200">
+                      <button
+                        onClick={() => setPreviewKey((prev) => prev + 1)}
+                        className="w-[120px] h-[34px] sm:w-[120px] sm:h-[40px] rounded-lg font-semibold border border-zinc-800 flex items-center justify-center gap-[5px] hover:scale-90 transition-all hover:bg-[#333] duration-200"
+                      >
                         <i>
                           <FiRefreshCcw size={16} />
                         </i>
                         Refresh
                       </button>
                     </>
-                  }
-                  
+                  )}
                 </div>
               </div>
 
-
-
               <div className="editor h-full">
-
-                {
-                  tab === 1 ?
-                  <>
+                {tab === 2 && frameWork.value.includes("react") ? (
+                  <div className="w-full h-[75%] flex items-center justify-center text-gray-400 text-center px-4">
+                    <p>
+                      ⚠️ Live preview is not available for React code.
+                      <br />
+                      Please open it in your IDE.
+                    </p>
+                  </div>
+                ) : tab === 2 ? (
+                  <iframe
+                    key={previewKey}
+                    srcDoc={code}
+                    className="preview w-full h-[75%] bg-gray-500 text-black flex items-center justify-center"
+                  ></iframe>
+                ) : (
                   <Editor
                     height="75%"
                     theme="vs-dark"
                     language="javascript"
                     value={code}
                   />
-                  </> 
-                  :
-                  <>
-                    <iframe 
-                    key={previewKey}
-                    srcDoc={code} 
-                    className="preview w-full h-[75%] bg-gray-500 text-black flex items-center justify-center">
-                    </iframe>
-                  </>
-                }
-
+                )}
               </div>
             </>
           )}
-
         </div>
-
       </div>
 
-
-      {
-        isNewTapOpen && (
-          <div
-            className="fixed inset-0 z-50 bg-white flex flex-col w-screen h-screen overflow-hidden"
-          >
-            {/* Top Bar */}
-            <div className="w-full h-[60px] flex items-center justify-between text-xl px-6 sm:px-6 bg-gray-200 border-b text-black">
-              <p className="font-bold">Preview</p>
-              <button
-                className="w-[36px] h-[36px] rounded-full border border-zinc-800 flex items-center justify-center hover:bg-[#4f4e4e] transition-all"
-                onClick={() => setIsNewTapOpen(false)}
-              >
-                <IoClose size={20} />
-              </button>
-            </div>
-
-            {/* Preview iframe */}
-            <div className="flex-1 overflow-auto">
-              <iframe
-                key={previewKey}
-                srcDoc={code}
-                className="w-full h-full"
-              ></iframe>
-            </div>
+      {isNewTapOpen && (
+        <div className="fixed inset-0 z-50 bg-white flex flex-col w-screen h-screen overflow-hidden">
+          {/* Top Bar */}
+          <div className="w-full h-[60px] flex items-center justify-between text-xl px-6 sm:px-6 bg-gray-200 border-b text-black">
+            <p className="font-bold">Preview</p>
+            <button
+              className="w-[36px] h-[36px] rounded-full border border-zinc-800 flex items-center justify-center hover:bg-[#4f4e4e] transition-all"
+              onClick={() => setIsNewTapOpen(false)}
+            >
+              <IoClose size={20} />
+            </button>
           </div>
-        )
-      }
 
-
+          {/* Preview iframe */}
+          <div className="flex-1 overflow-auto">
+            <iframe
+              key={previewKey}
+              srcDoc={code}
+              className="w-full h-full"
+            ></iframe>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
