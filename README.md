@@ -29,7 +29,11 @@ Here are the main features of SnapUI:
 
 <p align="center">
   <h3>Home Page </h3>
-  <img src= alt="SnapUI Bot" width="150"/>
+  <img src="public/home-snapui.png" alt="SnapUI Bot" width="550"/>
+</p>
+<p align="center">
+  <h3>Snap UI Page </h3>
+  <img src="public/snapui.png" alt="SnapUI Bot" width="550"/>
 </p>
 
 ---
