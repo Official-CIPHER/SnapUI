@@ -1,15 +1,20 @@
 # SnapUI
 
+🌟 Snap UI - AI powered component builder 
+
 <p align="center">
   <img src="public/bot.png" alt="SnapUI Bot" width="150"/>
 </p>
 
-AI-powered component builder to instantly generate clean, responsive UI components with live preview and production-ready code.
 ---
+[![Live Demo](https://img.shields.io/badge/Live%20Portfolio-Click%20Here-brightgreen?style=for-the-badge)](https://snapui-cipher.netlify.app/)
 
-## 🚀 Live Demo
+![Visitors](https://visitor-badge.laobi.icu/badge?page_id=Official-CIPHER.SnapUI)  
+[![GitHub Stars](https://img.shields.io/github/stars/Official-CIPHER/Official-Portfolio?style=for-the-badge)](https://github.com/Official-CIPHER/SnapUI/stargazers)  
 
-Check out the live version here: **[Live Demo](https://snapui-cipher.netlify.app/)**  
+
+
+**SnapUI**: AN AI-powered component builder to instantly generate clean, responsive UI components with live preview and production-ready code.
 
 ---
 
@@ -25,7 +30,7 @@ Here are the main features of SnapUI:
 - **Export / Download**: Download code or assets (CSS, JS) of the generated UI.  
 
 ---
-## How it looks
+## Preview
 
 <p align="center">
   <h3>Home Page </h3>
@@ -54,3 +59,14 @@ Make sure you have:
 git clone https://github.com/Official-CIPHER/SnapUI.git
 cd SnapUI
 npm install
+```
+
+## 📬 Contact Me  
+
+- 📧 **Email:** vishalkumar211103@gmail.com  
+- 💼 **LinkedIn:** [Your LinkedIn](https://www.linkedin.com/in/vishal-kumar-vk70/)  
+- 🐙 **GitHub:** [Official-CIPHER](https://github.com/Official-CIPHER)  
+
+---
+
+⭐ *If you like my portfolio, please consider giving it a star! It helps a lot.*  
