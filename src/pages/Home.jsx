@@ -83,7 +83,7 @@ const Home = () => {
   }
 
   // The client gets the API key from the environment variable `GEMINI_API_KEY`.
-  const ai = new GoogleGenAI({apiKey:"AIzaSyA6aZge2F3tH9e3Qxa0gPidxANcdvW4948"});
+  const ai = new GoogleGenAI({apiKey:import.meta.env.VITE_GEMINI_API_KEY});
 
 
   async function getResponse() {
