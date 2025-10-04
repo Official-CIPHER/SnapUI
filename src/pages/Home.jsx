@@ -16,7 +16,7 @@ import { ClipLoader } from "react-spinners";
 import { toast } from 'react-toastify';
 
 // { value: "react-css", label: "React + CSS" },
-//     { value: "react-tailwind", label: "React + Tailwind CSS" },
+
 
 const Home = () => {
   const options = [
@@ -25,6 +25,7 @@ const Home = () => {
     { value: "html-bootstrap", label: "HTML + Bootstrap" },
     { value: "html-css-js", label: "HTML + CSS + JS" },
     { value: "html-tailwind-bootstrap", label: "HTML + Tailwind + Bootstrap" },
+    { value: "react-tailwind", label: "React + Tailwind CSS" },
   ];
 
   // to save in localStorage
